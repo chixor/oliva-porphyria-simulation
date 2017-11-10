@@ -5,7 +5,7 @@
 
  * Written by Sarah Spencer 2017, http://heartofpluto.co/
  * This is based on the short version of a Visual Basic program written by
- * H.Meinhardt and made publicly available here:
+ * H. Meinhardt and made publicly available here:
  * http://www.eb.tuebingen.mpg.de/research/emeriti/hans-meinhardt/shell-program.html
 
  * See also: Meinhardt, H. and Klingler, M. (1987) J. theor. Biol 126, 63-69
@@ -16,7 +16,7 @@
  * here "Oliva porphyria".
  * An autocatalytic activator a(i) leads to a burst-like activation
  * that is regulated back by the action of an inhibitor b(i). The
- * liferime of the inhibitor is regulated via a hormone c, which is
+ * lifetime of the inhibitor is regulated via a hormone c, which is
  * homogeneously distributed along the growing edge. Whenever the number
  * of activated cells becomes too small, active cells remain activated
  * until backwards waves are triggered.
@@ -29,13 +29,12 @@ float[] zx = new float[imax];
 
 int KT = 480;    // Number of displays
                  // KT * KP = number of iterations in total
-int KP = 12;     // Number of iterations between the displays ( = lines on the screen)
+int KP = 12;     // Number of iterations between the displays (= lines on the screen)
 int kx = 640;    // Number of cells
 int dx = 1;      // Width of a cell in pixel;   with kp=6 ; kx=315 and dx=2 =>
                  // simulation in a smaller field
 float DA = .015; // Diffusion of the activator
 float RA = .1;   // Decay rate of the inhibitor
-float BA = .1;   // Basic production of the activator
 float SA = .25;  // Saturation of the autocatalysis
 float DB = 0;    // Diffusion of the inhibitor
 float RB = .014; // Decay rate of the inhibitor
@@ -87,7 +86,7 @@ void draw() {
   for(int itot = 0; itot < KT; itot++) {
     for(int iprint = 1; iprint < KP; iprint++) { // Start of the iteration
       // ------------- Boundary impermeable -------------
-      A1 = ax[1]; //    a1 is the concentration  of the actual cell. Since this
+      A1 = ax[1]; //    a1 is the concentration of the actual cell. Since this
       B1 = bx[1]; //    concentration is identical, no diffusion through the border.
       ax[kx + 1] = ax[kx]; // Concentration in a virtual right cell
       bx[kx + 1] = bx[kx];
@@ -98,7 +97,7 @@ void draw() {
         AF = ax[i]; // Local activator concentration
         BF = bx[i]; // Local inhibitor concentration
         AQ = (zx[i] * AF * AF) / (1 + (SA * AF * AF));  // Saturating autocatalysis
-  
+
         // Calculation of the new activator and inhibitor concentration in cell i:
         ax[i] = (AF * DAC) + (DA * (A1 + ax[i + 1])) + (AQ / (SB + BF));
 
@@ -109,10 +108,10 @@ void draw() {
         B1 = BF; //    in the concentration change of the next cell
       }
 
-      C = (C * (1 - RC)) + (BSA / kx); // New hormone concentration, 1/kx=normalization
-      RBB = RB / C;                 // on total number of cells
+      C = (C * (1 - RC)) + (BSA / kx); // New hormone concentration, 1/kx = normalization
+      RBB = RB / C;                    // on total number of cells
       //RBB => Effective lifetime of the inhibitor
-      DBCC = 1 - (2 * DB) - RBB;      // Change in a cell by diffusion
+      DBCC = 1 - (2 * DB) - RBB;   // Change in a cell by diffusion
                                    // and decay. Must be recalculated, since
                                    // lifetime of the inhibitor changes
     }
